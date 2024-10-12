@@ -1,4 +1,11 @@
-<button (click)="user()">USER</button><br/>
-<button (click)="adm()">ADM</button><br/>
-<button (click)="profile()">PROFILE</button><br/>
-<button (click)="logout()">Logout</button><br/>
+<div class="container">
+  <div class="card-flex">
+    <h1>Tela Dashboard</h1>
+    <div class="button-group">
+      <p-button label="User View" (onClick)="user()"></p-button>
+      <p-button label="Adm View" (onClick)="adm()"></p-button>
+      <p-button label="Profile View" (onClick)="profile()"></p-button>
+      <p-button label="Logout" (onClick)="logout()"></p-button>
+    </div>
+  </div>
+</div>

@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthServiceService} from "../../service/auth-service.service";
+import {Button} from "primeng/button";
+import {PaginatorModule} from "primeng/paginator";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [
+    Button,
+    PaginatorModule,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
