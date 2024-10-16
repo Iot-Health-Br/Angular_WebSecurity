@@ -35,4 +35,8 @@ export class DashboardComponent {
   logout(){
     this._service.logout();
   }
+
+  manager(){
+    this._router.navigate(['/manager']);
+  }
 }

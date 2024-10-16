@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AuthServiceService} from "../../service/auth-service.service";
 import {CardModule} from "primeng/card";
@@ -17,18 +17,16 @@ import {ButtonGroupModule} from "primeng/buttongroup";
   selector: 'app-login',
   standalone: true,
   imports: [
-    NgIf,
     FormsModule,
     CardModule,
     InputTextModule,
     MessagesModule,
-    FloatLabelModule,
     PasswordModule,
     ToastModule,
     Button,
     ButtonModule,
-    RippleModule,
     ButtonGroupModule,
+    CommonModule
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',
