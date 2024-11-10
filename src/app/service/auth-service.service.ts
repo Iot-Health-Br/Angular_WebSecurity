@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class AuthServiceService {
-
+  private apiUrl = 'http://localhost:8080/user/login';
   isAutenticado: boolean = this.getAuthStatus();
   isAdmin: boolean = this.getAdminStatus();
   isManager: boolean = this.getManagerStatus();
