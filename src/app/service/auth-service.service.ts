@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
+import {Observable, tap} from "rxjs";
+import {LoginResponse} from "../model/LoginResponse";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +13,10 @@ export class AuthServiceService {
   isAdmin: boolean = this.getAdminStatus();
   isManager: boolean = this.getManagerStatus();
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private http: HttpClient) {
   }
 
+  /*
   login(username: string, password: string) {
     if (username && password) {
       if (username === 'admin' && password === 'admin') {
@@ -30,6 +34,20 @@ export class AuthServiceService {
       }
     }
     return false;
+  }*/
+
+  login(username: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.apiUrl, { username, password })
+      .pipe(
+        tap(response => {
+          if (response.authenticated) {
+            const isAdmin = response.roles?.includes('ADMIN') || false;
+            const isManager = response.roles?.includes('MANAGER') || false;
+            this.setAuthState(true, isAdmin, isManager);
+            this.router.navigate(['/dashboard']);
+          }
+        })
+      );
   }
 
   logout(): void {

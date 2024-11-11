@@ -10,6 +10,7 @@ import {Button, ButtonModule} from "primeng/button";
 import {MessagesModule} from "primeng/messages";
 import {MessageService} from "primeng/api";
 import {ButtonGroupModule} from "primeng/buttongroup";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-login',
@@ -37,6 +38,7 @@ export class LoginComponent {
 
   constructor(private authService: AuthServiceService, private messageService: MessageService) {}
 
+  /*
   onLogin(): void {
     const success = this.authService.login(this.username, this.password);
     if (!success) {
@@ -44,5 +46,26 @@ export class LoginComponent {
     }else{
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
     }
+  }*/
+
+  onLogin(): void {
+    if (this.username && this.password) {
+      console.log(this.username,this.password);
+      this.authService.login(this.username, this.password).subscribe({
+        next: (response) => {
+          if (response.authenticated) {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });}
+          else {
+            const errorMessage = error.error;
+            this.messageService.add({severity:'error', summary:'Erro', detail: errorMessage, life: 10000 });
+            
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });}
+        },
+        error: (error) => {
+          this.messageService.add({severity: 'error', summary: 'Erro', detail: 'Erro ao tentar fazer login. Por favor, tente novamente.'});}
+      });
+    }
+    else {
+        this.messageService.add({severity: 'warn', summary: 'Atenção', detail: 'Por favor, preencha usuário e senha.'});}
   }
 }
