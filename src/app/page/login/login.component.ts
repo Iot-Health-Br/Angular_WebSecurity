@@ -38,27 +38,17 @@ export class LoginComponent {
 
   constructor(private authService: AuthServiceService, private messageService: MessageService) {}
 
-  /*
-  onLogin(): void {
-    const success = this.authService.login(this.username, this.password);
-    if (!success) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
-    }else{
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
-    }
-  }*/
-
   onLogin(): void {
     if (this.username && this.password) {
       console.log(this.username,this.password);
       this.authService.login(this.username, this.password).subscribe({
         next: (response) => {
           if (response.authenticated) {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });}
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content',life: 10000 });}
           else {
-            const errorMessage = error.error;
-            this.messageService.add({severity:'error', summary:'Erro', detail: errorMessage, life: 10000 });
-            
+            //const errorMessage = error.error;
+            //this.messageService.add({severity:'error', summary:'Erro', detail: errorMessage, life: 10000 });
+
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });}
         },
         error: (error) => {

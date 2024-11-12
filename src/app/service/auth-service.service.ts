@@ -1,19 +1,21 @@
-import {Injectable} from '@angular/core';
+import {Component, Injectable} from '@angular/core';
 import {Router} from "@angular/router";
 import {Observable, tap} from "rxjs";
 import {LoginResponse} from "../model/LoginResponse";
 import {HttpClient} from "@angular/common/http";
+import {MessageService} from "primeng/api";
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthServiceService {
   private apiUrl = 'http://localhost:8080/user/login';
   isAutenticado: boolean = this.getAuthStatus();
   isAdmin: boolean = this.getAdminStatus();
   isManager: boolean = this.getManagerStatus();
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient, private messageService: MessageService) {
   }
 
   /*
@@ -44,8 +46,10 @@ export class AuthServiceService {
             const isAdmin = response.roles?.includes('ADMIN') || false;
             const isManager = response.roles?.includes('MANAGER') || false;
             this.setAuthState(true, isAdmin, isManager);
-            this.router.navigate(['/dashboard']);
-          }
+            this.messageService.add({severity: 'success', summary: 'Sucesso', detail: response.message, life: 5000});
+            this.router.navigate(['/dashboard']);}
+          else {
+            this.messageService.add({severity: 'error', summary: 'Erro', detail: response.message, life: 5000});}
         })
       );
   }
