@@ -34,7 +34,6 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 export class LoginComponent {
   username: string = '';
   password: string = '';
-  errorMessage: string = '';
 
   constructor(private authService: AuthServiceService, private messageService: MessageService) {}
 
@@ -44,18 +43,22 @@ export class LoginComponent {
       this.authService.login(this.username, this.password).subscribe({
         next: (response) => {
           if (response.authenticated) {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content',life: 10000 });}
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: response.message,life: 10000 });}
           else {
-            //const errorMessage = error.error;
-            //this.messageService.add({severity:'error', summary:'Erro', detail: errorMessage, life: 10000 });
-
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });}
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: response.message,life: 10000 });}
         },
         error: (error) => {
-          this.messageService.add({severity: 'error', summary: 'Erro', detail: 'Erro ao tentar fazer login. Por favor, tente novamente.'});}
+          this.messageService.add({severity: 'error', summary: 'Erro', detail: 'Erro ao tentar fazer login. Por favor, tente novamente.',life: 10000});}
       });
     }
     else {
-        this.messageService.add({severity: 'warn', summary: 'Atenção', detail: 'Por favor, preencha usuário e senha.'});}
+        this.messageService.add({severity: 'warn', summary: 'Atenção', detail: 'Por favor, preencha usuário e senha.',life: 10000});}
+  }
+
+  // Método para limpar os campos do formulário
+  clearForm() {
+    this.username = '';
+    this.password = '';
+    this.messageService.add({severity: 'warn', summary: 'Atenção', detail: 'Login Cancelado',life: 10000});
   }
 }

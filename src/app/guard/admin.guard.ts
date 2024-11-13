@@ -7,16 +7,14 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (authService.isAutenticado) {
-    if (authService.isAdmin||authService.isManager) {
-      return true;
-    } else {
-      alert("Você não tem permissão")
-      router.navigate(['/dashboard']);
-      return false;
-    }
-  } else {
-    console.log('Você não esta autenticado');
-    router.navigate(['/login']);
-    return false;
-  }
+      if (authService.isAdmin||authService.isManager) {
+        return true;}
+      else {
+        alert("Você não tem permissão")
+        router.navigate(['/dashboard']);
+        return false;}}
+  else {
+      console.log('Você não esta autenticado');
+      router.navigate(['/login']);
+      return false;}
 };
