@@ -37,6 +37,20 @@ export class AuthServiceService {
       );
   }
 
+  save(username: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.apiUrl, { username, password })
+      .pipe(
+        tap(response => {
+          if (response.authenticated) {
+            const isUser = response.roles?.includes('USER') || false;
+            this.messageService.add({severity: 'success', summary: 'Sucesso', detail: response.message, life: 5000});
+            this.router.navigate(['/dashboard']);}
+          else {
+            this.messageService.add({severity: 'error', summary: 'Erro', detail: response.message, life: 5000});}
+        })
+      );
+  }
+
   logout(): void {
     localStorage.clear();
     this.setAuthState(false, false, false, false)

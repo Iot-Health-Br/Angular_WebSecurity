@@ -30,4 +30,8 @@ export class HomeComponent {
   adm(){
     this.router.navigate(['/admin']);
   }
+
+  register() {
+    this.router.navigate(['/register']);
+  }
 }
