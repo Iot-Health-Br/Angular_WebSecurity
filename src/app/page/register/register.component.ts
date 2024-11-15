@@ -6,6 +6,7 @@ import {PasswordModule} from "primeng/password";
 import {ToastModule} from "primeng/toast";
 import {AuthServiceService} from "../../service/auth-service.service";
 import {MessageService} from "primeng/api";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-register',
@@ -23,25 +24,36 @@ import {MessageService} from "primeng/api";
 export class RegisterComponent {
   username: string = '';
   password: string = '';
+  roles: string = 'USER';
   confirmPassword = '';
   constructor(private authService: AuthServiceService, private messageService: MessageService) {}
 
+
   Save() {
+    const newUser: User = {
+      username: this.username,
+      password: this.password
+    };
+
     if (this.password !== this.confirmPassword) {
       this.messageService.add({severity: 'warn', summary: 'Atenção', detail: 'As senhas são divirgentes!',life: 10000});
     }
     else{
       console.log(this.username,this.password);
-      this.authService.save(this.username, this.password).subscribe({
-        next: (response) => {
-          if (response.authenticated) {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: response.message,life: 10000 });}
-          else {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: response.message,life: 10000 });}
+      this.authService.saveUser(newUser).subscribe(
+        (response) => {
+          this.messageService.add({severity:'success', summary:'Sucesso', detail: response, life: 10000});
+          console.log('Pessoa salva com sucesso!', response);
+          // Limpar os campos após o sucesso
+          this.username = '';
+          this.password = '';
         },
-        error: (error) => {
-          this.messageService.add({severity: 'error', summary: 'Erro', detail: 'Erro ao tentar fazer login. Por favor, tente novamente.',life: 10000});}
-      });
+        (error) => {
+          const errorMessage = error.error;
+          this.messageService.add({severity:'error', summary:'Erro', detail: errorMessage, life: 10000 });
+          console.error('Erro ao salvar a pessoa', error);
+        }
+      );
     }
   }
 

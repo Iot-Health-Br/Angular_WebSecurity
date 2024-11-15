@@ -4,13 +4,15 @@ import {Observable, tap} from "rxjs";
 import {LoginResponse} from "../model/LoginResponse";
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "primeng/api";
+import {User} from "../model/user";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthServiceService {
-  private apiUrl = 'http://localhost:8080/user/login';
+  private urlLogin = 'http://localhost:8080/user/login';
+  private urlSave = 'http://localhost:8080/user/save';
   isAutenticado: boolean = this.getAuthStatus();
   isUser: boolean = this.getUserStatus();
   isAdmin: boolean = this.getAdminStatus();
@@ -20,7 +22,7 @@ export class AuthServiceService {
   }
 
   login(username: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.apiUrl, { username, password })
+    return this.http.post<LoginResponse>(this.urlLogin, { username, password })
       .pipe(
         tap(response => {
           if (response.authenticated) {
@@ -37,18 +39,8 @@ export class AuthServiceService {
       );
   }
 
-  save(username: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.apiUrl, { username, password })
-      .pipe(
-        tap(response => {
-          if (response.authenticated) {
-            const isUser = response.roles?.includes('USER') || false;
-            this.messageService.add({severity: 'success', summary: 'Sucesso', detail: response.message, life: 5000});
-            this.router.navigate(['/dashboard']);}
-          else {
-            this.messageService.add({severity: 'error', summary: 'Erro', detail: response.message, life: 5000});}
-        })
-      );
+  saveUser(user: User): Observable<string> {
+    return this.http.post(this.urlSave, user, { responseType: 'text' });
   }
 
   logout(): void {
