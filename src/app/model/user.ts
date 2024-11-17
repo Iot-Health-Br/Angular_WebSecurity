@@ -3,5 +3,5 @@ export interface User {
   username: string;  // Login do usuário
   nome: string;
   password: string;   // Senha do usuário
-  roles: string;
+  roles: string[];
 }

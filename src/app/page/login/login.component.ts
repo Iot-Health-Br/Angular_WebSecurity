@@ -43,6 +43,14 @@ export class LoginComponent {
       this.authService.login(this.username, this.password).subscribe({
         next: (response) => {
           if (response.authenticated) {
+            // Salvando os dados no localStorage
+            localStorage.setItem('userId', response.userId?.toString() || '');
+            localStorage.setItem('fullName', response.fullName || '');
+            localStorage.setItem('username', response.username || '');
+            // Verificando os dados no localStorage
+            console.log('userId:', localStorage.getItem('userId'));
+            console.log('fullName:', localStorage.getItem('fullName'));
+            console.log('username:', localStorage.getItem('username'));
             this.messageService.add({ severity: 'success', summary: 'Success', detail: response.message,life: 10000 });}
           else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: response.message,life: 10000 });}

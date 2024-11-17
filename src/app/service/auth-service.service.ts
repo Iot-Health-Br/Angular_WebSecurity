@@ -28,13 +28,14 @@ export class AuthServiceService {
       .pipe(
         tap(response => {
           if (response.authenticated) {
+              //console.log(response);
               const isUser = response.roles?.includes('USER') || false;
               const isAdmin = response.roles?.includes('ADMIN') || false;
               const isManager = response.roles?.includes('MANAGER') || false;
 
               this.setAuthState(true, isUser, isAdmin, isManager);
               this.messageService.add({severity: 'success', summary: 'Sucesso', detail: response.message, life: 5000});
-              this.router.navigate(['/dashboard']);}
+              this.router.navigate(['/profile']);}
           else {
               this.messageService.add({severity: 'error', summary: 'Erro', detail: response.message, life: 5000});}
         })
@@ -46,6 +47,7 @@ export class AuthServiceService {
   }
 
   saveAdm(user: User): Observable<string> {
+    console.log('Sending user data:', JSON.stringify(user)); // Para debug
     return this.http.post(this.urlSaveAdm, user, { responseType: 'text' });
   }
 

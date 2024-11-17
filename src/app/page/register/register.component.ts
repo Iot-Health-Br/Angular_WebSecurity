@@ -25,7 +25,7 @@ export class RegisterComponent {
   username: string = '';
   nome: string = '';
   password: string = '';
-  categoria!: string;
+  //categoria: string='';
   confirmPassword = '';
   constructor(private authService: AuthServiceService, private messageService: MessageService) {}
 
@@ -34,7 +34,7 @@ export class RegisterComponent {
       username: this.username,
       nome: this.nome,
       password: this.password,
-      roles: this.categoria
+      roles: [] //this.categoria
     };
 
     if (this.password !== this.confirmPassword) {

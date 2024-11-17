@@ -1,11 +1,32 @@
+<!-- profile.component.html -->
 <div class="container">
   <div class="card-flex">
-    <h1>Home Profile</h1>
+    <h1>Bem Vindo!</h1>
+    <h1>{{ fullName }}</h1>
 
-    <p-avatar
-      image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-      styleClass="mr-2"
-      size="xlarge"
-      shape="circle" />
+    <div class="profile-info">
+      <p-avatar
+        image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+        styleClass="mr-2"
+        size="xlarge"
+        shape="circle">
+      </p-avatar>
+
+      <div class="user-details mt-3">
+        <div class="info-item">
+          <span class="label">Matricula:</span>
+          <span class="value">{{ userId || 'Não disponível' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Username:</span>
+          <span class="value">{{ username || 'Não disponível' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <p-toast />
+      <p-button label="Home" icon="pi pi-home" styleClass="save-button" (onClick)="returnHome()"></p-button>
+    </div>
   </div>
 </div>

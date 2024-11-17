@@ -25,6 +25,58 @@ html, body {
   text-align: center; /* Centraliza todo o conteúdo de texto dentro do card */
 }
 
+/* Cabeçalho Página profile.component.css */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.user-details {
+  width: 100%;
+  max-width: 400px;
+}
+.info-item {
+  display: flex;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+.label {
+  font-weight: bold;
+  min-width: 120px;
+  color: #333;
+}
+.value {
+  font-weight: bold;
+  color: #ffffff;
+}
+.mt-3 {
+  margin-top: 1rem;
+}
+
+/* Para alterar as cores dos botões de PrimeNG, é necessário usar ::ng-deep */
+::ng-deep .save-button {
+  background-color: #28a745 !important; /* Cor de fundo verde */
+  color: white !important; /* Cor do texto */
+  border: none !important; /* Remove a borda */
+}
+/* Adiciona efeito de hover para o botão Save */
+::ng-deep .save-button:hover {
+  background-color: #218838 !important; /* Cor verde mais escura ao passar o mouse */
+}
+/* Para os botões serem responsivos e terem espaçamento */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+p-button {
+  flex: 1; /* Faz com que os botões se ajustem proporcionalmente */
+}
+
+
+
 /* Media queries para ajustes em telas maiores */
 @media (min-width: 600px) {
   .card-flex {

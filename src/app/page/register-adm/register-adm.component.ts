@@ -45,7 +45,7 @@ export class RegisterAdmComponent {
       username: this.username,
       nome: this.nome,
       password: this.password,
-      roles: JSON.stringify(this.selectedCategoria ? this.selectedCategoria.key : '')
+      roles: [this.selectedCategoria ? this.selectedCategoria.key : ''] // Enviando como array
     };
 
     if (this.password !== this.confirmPassword) {
