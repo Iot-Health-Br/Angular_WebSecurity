@@ -8,6 +8,8 @@ import {AuthServiceService} from "../../service/auth-service.service";
 import {Button} from "primeng/button";
 import {ToastModule} from "primeng/toast";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {MessageModule} from "primeng/message";
+import {combineLatest, timer} from "rxjs";
 
 @Component({
   selector: 'app-user-details',
@@ -19,7 +21,8 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
     CommonModule,
     Button,
     ToastModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    MessageModule
   ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.css'
@@ -31,7 +34,7 @@ export class UserDetailsComponent implements OnInit{
   users: User[] = [];
   loading = false;
   error: string | null = null;
-
+  private readonly LOADING_TIME = 5000; // 5 segundos em milissegundos
   constructor(private authService: AuthServiceService, private messageService: MessageService) {}
 
   ngOnInit(): void {
@@ -41,14 +44,31 @@ export class UserDetailsComponent implements OnInit{
   loadUsers(): void {
     this.loading = true;
     this.error = null;
+    this.products = [];
 
-    this.authService.getUsers().subscribe({
-      next: (data) => {
+    // Criar um timer de 5 segundos
+    const minimumLoadingTime = timer(this.LOADING_TIME);
+
+    combineLatest([this.authService.getUsers(), minimumLoadingTime]).subscribe({
+      next: ([data, _]) => {
         this.products = data;
         this.loading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Dados carregados com sucesso!'
+        });
       },
       error: (err) => {
-        this.error = 'Erro ao carregar usuários: ' + err.message;
+        this.error = 'Erro ao carregar lista de usuários: ' + err.message;
+        this.loading = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: this.error
+        });
+      },
+      complete: () => {
         this.loading = false;
       }
     });
@@ -59,10 +79,13 @@ export class UserDetailsComponent implements OnInit{
   }
 
   clearForm() {
-
+    if (this.loading) return;
+    this.selectedProduct = null as any;
+    this.error = null;
   }
 
   searchUser() {
-
+    if (this.loading) return;
+    this.loadUsers();
   }
 }

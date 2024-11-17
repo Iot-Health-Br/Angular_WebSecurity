@@ -56,7 +56,7 @@ export class RegisterAdmComponent {
       this.authService.saveAdm(newUser).subscribe(
         (response) => {
           this.messageService.add({severity:'success', summary:'Sucesso', detail: response, life: 10000});
-          console.log('Pessoa salva com sucesso!', response);
+          console.log('Sucess:', response);
           // Limpar os campos após o sucesso
           this.username = '';
           this.nome = '';
@@ -65,7 +65,7 @@ export class RegisterAdmComponent {
         (error) => {
           const errorMessage = error.error;
           this.messageService.add({severity:'error', summary:'Erro', detail: errorMessage, life: 10000 });
-          console.error('Erro ao salvar a pessoa', error);
+          console.error('Erro:', error);
         }
       );
     }
