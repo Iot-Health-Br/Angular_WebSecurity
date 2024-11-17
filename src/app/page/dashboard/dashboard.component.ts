@@ -22,8 +22,12 @@ export class DashboardComponent {
   constructor(private _router: Router, private _service: AuthServiceService, private messageService: MessageService) {
   }
   admRegister(){
-    this._router.navigate(['/registerAdm']);
+    this._router.navigate(['/register-adm']);
   }
+  userDetails(){
+    this._router.navigate(['/user-details']);
+  }
+
   user(){
     this._router.navigate(['/user']);
   }

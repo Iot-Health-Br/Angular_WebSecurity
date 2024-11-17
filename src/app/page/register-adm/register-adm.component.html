@@ -1,8 +1,20 @@
 <div class="container">
   <div class="card-flex">
-    <h1>Register View</h1>
+    <h1>Register ADM View</h1>
     <div class="input-group">
       <input type="text" pInputText placeholder="username" [(ngModel)]="username" />
+      <input type="text" pInputText placeholder="nome" [(ngModel)]="nome" />
+      <div class="combobox-categoria">
+        <p-treeSelect
+          class="md:w-20rem w-full"
+          containerStyleClass="w-full"
+          [(ngModel)]="selectedCategoria"
+          [options]="categoria"
+          placeholder="Selecione uma categoria"
+          selectionMode="single"
+          [metaKeySelection]="false">
+        </p-treeSelect>
+      </div>
       <p-password [(ngModel)]="password" [toggleMask]="true" />
       <p-password [(ngModel)]="confirmPassword" [toggleMask]="true" />
     </div>

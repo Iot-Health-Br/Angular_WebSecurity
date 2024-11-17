@@ -10,12 +10,15 @@ import {adminGuard} from "./guard/admin.guard";
 import {ManagerComponent} from "./page/manager/manager.component";
 import {managerGuard} from "./guard/manager.guard";
 import {RegisterComponent} from "./page/register/register.component";
+import {RegisterAdmComponent} from "./page/register-adm/register-adm.component";
+import {UserDetailsComponent} from "./page/user-details/user-details.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'registerAdm', component: AdmComponent, canActivate: [adminGuard]},
+  {path: 'register-adm', component: RegisterAdmComponent, canActivate: [managerGuard,adminGuard]},
+  {path: 'user-details', component: UserDetailsComponent, canActivate: [adminGuard,managerGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'dashboard', component: DashboardComponent, canActivate: [authGuard]},
   {path: 'admin', component: AdmComponent, canActivate: [adminGuard]},

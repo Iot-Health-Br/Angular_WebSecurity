@@ -13,6 +13,8 @@ import {User} from "../model/user";
 export class AuthServiceService {
   private urlLogin = 'http://localhost:8080/user/login';
   private urlSave = 'http://localhost:8080/user/save';
+  private urlSaveAdm = 'http://localhost:8080/user/saveAdm';
+  private urlGetUser = 'http://localhost:8080/user/getUser';
   isAutenticado: boolean = this.getAuthStatus();
   isUser: boolean = this.getUserStatus();
   isAdmin: boolean = this.getAdminStatus();
@@ -41,6 +43,14 @@ export class AuthServiceService {
 
   saveUser(user: User): Observable<string> {
     return this.http.post(this.urlSave, user, { responseType: 'text' });
+  }
+
+  saveAdm(user: User): Observable<string> {
+    return this.http.post(this.urlSaveAdm, user, { responseType: 'text' });
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.urlGetUser);
   }
 
   logout(): void {

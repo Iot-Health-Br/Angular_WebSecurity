@@ -20,7 +20,7 @@ html, body {
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   width: 90%; /* O card ocupa 90% da largura da tela, garantindo que ele se ajuste ao tamanho */
-  max-width: 550px; /* Define uma largura máxima para não expandir demais em telas grandes */
+  max-width: 800px; /* Define uma largura máxima para não expandir demais em telas grandes */
   box-sizing: border-box;
   text-align: center; /* Centraliza todo o conteúdo de texto dentro do card */
 }
@@ -46,6 +46,6 @@ p-button {
 
 @media (min-width: 1024px) {
   .card-flex {
-    width: 50%; /* Para telas ainda maiores, o card ocupará 50% da largura */
+    width: 90%; /* Para telas ainda maiores, o card ocupará 50% da largura */
   }
 }
